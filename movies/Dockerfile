@@ -39,7 +39,7 @@ ARG DEPLOY_DIR=/code_folder
 
 WORKDIR ${DEPLOY_DIR}
 #change the names here
-COPY --from=compiler /app/target/assessment-0.0.1-SNAPSHOT.jar vttp2023_batch4_paf.jar
+COPY --from=compiler /app/target/movies.SNAPSHOT.jar paf_bf_assessment.jar
 
 # Set the server port
 ENV SERVER_PORT=8080
@@ -51,4 +51,4 @@ EXPOSE ${SERVER_PORT}
 # ENV SPRING_DATASOURCE_PASSWORD=fred
 #change the name here
 # Run the application
-ENTRYPOINT SERVER_PORT=${SERVER_PORT} java -jar vttp2023_batch4_paf.jar
+ENTRYPOINT SERVER_PORT=${SERVER_PORT} java -jar paf_bf_assessment.jar
