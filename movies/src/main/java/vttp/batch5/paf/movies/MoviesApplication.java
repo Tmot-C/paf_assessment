@@ -20,7 +20,7 @@ public class MoviesApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) {
 
-		dataloader.runDataloader();
+		dataloader.runDataloader(args);
 	};
 
 }

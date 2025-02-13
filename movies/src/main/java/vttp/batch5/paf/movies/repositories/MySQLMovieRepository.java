@@ -1,11 +1,16 @@
 package vttp.batch5.paf.movies.repositories;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Repository;
 
+import vttp.batch5.paf.movies.models.SqlFinances;
 import vttp.batch5.paf.movies.models.SqlMovie;
 
 @Repository
@@ -21,6 +26,12 @@ public class MySQLMovieRepository {
                      "revenue = VALUES(revenue), " +
                      "budget = VALUES(budget), " +
                      "runtime = VALUES(runtime)";
+
+  final String financialsQuery = 
+                      """
+                          SELECT imdb_id, revenue, budget
+                          FROM imdb
+                      """;
                      
   @Autowired
   JdbcTemplate jdbcTemplate;
@@ -45,6 +56,24 @@ public class MySQLMovieRepository {
   }
 
     // TODO: Task 3
+
+    public Map<String, SqlFinances> getFinancialData() {
+        SqlRowSet rs = jdbcTemplate.queryForRowSet(financialsQuery);
+        Map<String, SqlFinances> financialData = new HashMap<>();
+
+        while (rs.next()) {
+            financialData.put(
+                rs.getString("imdb_id"),
+                new SqlFinances(
+                    rs.getString("imdb_id"),
+                    rs.getBigDecimal("revenue"),
+                    rs.getBigDecimal("budget")
+                )
+            );
+        }
+
+        return financialData;
+    }
    
 }
   

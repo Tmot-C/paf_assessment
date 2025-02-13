@@ -43,11 +43,15 @@ public class Dataloader {
   @Autowired
   MovieService movieService;
 
-  @Value("${myapp.datafile:C:\\Users\\timot\\Documents\\paf_b5_assessment_template\\data\\movies_post_2010.zip}")
+  @Value("${myapp.datafile:data/movies_post_2010.zip}")
   private String zipFilePath;
 
   @Transactional
-  public void runDataloader(){
+  public void runDataloader(String[] args){
+    
+    if (args.length != 0) {
+      zipFilePath = args[0];
+    }
     
     if (!movieService.isSQLAlreadyLoaded() || !movieService.isMongoAlreadyLoaded()) {
       List<Document> movies = loadDataFromZip(zipFilePath);
