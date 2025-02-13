@@ -39,7 +39,7 @@ ARG DEPLOY_DIR=/code_folder
 
 WORKDIR ${DEPLOY_DIR}
 #change the names here
-COPY --from=compiler /app/target/movies.SNAPSHOT.jar paf_bf_assessment.jar
+COPY --from=compiler /app/target/movies-0.0.1-SNAPSHOT.jar paf_bf_assessment.jar
 
 # Set the server port
 ENV SERVER_PORT=8080
